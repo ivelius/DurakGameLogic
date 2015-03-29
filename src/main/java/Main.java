@@ -10,6 +10,7 @@ public class Main {
 
     public static void main(String[] args) {
 
+        //Trigger CI build
 //        startGameWith2RemoteClients();
         startGameWith3Bots();
     }
