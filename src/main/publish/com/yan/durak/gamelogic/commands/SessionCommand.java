@@ -10,6 +10,6 @@ import com.yan.durak.gamelogic.game.GameSession;
  */
 public interface SessionCommand {
 
-    public void setGameSession(GameSession gameSession);
-    public void execute();
+    void setGameSession(GameSession gameSession);
+    void execute();
 }

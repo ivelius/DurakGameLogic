@@ -67,3 +67,7 @@ publishing {
         }
     }
 }
+
+task openTestReportBrowser << {
+    java.awt.Desktop.desktop.browse "E:/GitHubCheckouts/DurakGameLogic/build/reports/tests/index.html".toURI()
+}
