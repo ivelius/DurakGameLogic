@@ -76,11 +76,13 @@ public class GameSession {
         if (command == null)
             throw new NullCommandException();
 
+        //prepare to execution
+        command.setGameSession(this);
+
         //run pre hooks
         checkForHooks(command, mPreHooksMap);
 
-        //prepare to execution
-        command.setGameSession(this);
+        //execute
         command.execute();
         mExecutedCommandsStack.push(command);
 

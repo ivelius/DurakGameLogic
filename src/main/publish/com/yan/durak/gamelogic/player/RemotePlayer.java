@@ -4,7 +4,7 @@ package com.yan.durak.gamelogic.player;
 import com.google.gson.Gson;
 import com.yan.durak.gamelogic.cards.Card;
 import com.yan.durak.gamelogic.cards.Pile;
-import com.yan.durak.gamelogic.communication.connection.RemoteClient;
+import com.yan.durak.gamelogic.communication.connection.SocketClient;
 import com.yan.durak.gamelogic.communication.protocol.data.CardData;
 import com.yan.durak.gamelogic.communication.protocol.messages.*;
 import com.yan.durak.gamelogic.game.GameSession;
@@ -18,12 +18,12 @@ import java.util.List;
  */
 public class RemotePlayer extends BasePlayer {
 
-    private RemoteClient mRemoteClient;
+    private SocketClient mSocketClient;
     private Gson mGson;
 
-    public RemotePlayer(int indexInGame, GameSession gameSession, int pileIndex, RemoteClient remoteClient) {
+    public RemotePlayer(int indexInGame, GameSession gameSession, int pileIndex, SocketClient remoteClient) {
         super(indexInGame, gameSession, pileIndex);
-        mRemoteClient = remoteClient;
+        mSocketClient = remoteClient;
         mGson = new Gson();
     }
 
@@ -33,10 +33,10 @@ public class RemotePlayer extends BasePlayer {
         //send a message to remote client requesting a card for attack
         List<Card> cardsInHand = mGameSession.getPilesStack().get(getPileIndex()).getCardsInPile();
         RequestCardForAttackMessage request = new RequestCardForAttackMessage(cardsInHand);
-        mRemoteClient.sendMessage(request.toJsonString());
+        mSocketClient.sendMessage(request.toJsonString());
 
         //waiting for client response (blocking)
-        String response = mRemoteClient.readMessage();
+        String response = mSocketClient.readMessage();
 
         //get the card from the response
         Card cardForAttack = extractCardForAttackFromResponse(response);
@@ -58,10 +58,10 @@ public class RemotePlayer extends BasePlayer {
 
         //send a message to remote client requesting to cover piles
         RequestRetaliatePilesMessage request = new RequestRetaliatePilesMessage(pilesToRetaliate);
-        mRemoteClient.sendMessage(request.toJsonString());
+        mSocketClient.sendMessage(request.toJsonString());
 
         //waiting for client response (blocking)
-        String response = mRemoteClient.readMessage();
+        String response = mSocketClient.readMessage();
 
         //TODO : use message to assemble the new piles list
         List<Pile> retaliatedPiles = extractRetaliatedPilesFromResponse(response);
@@ -83,10 +83,10 @@ public class RemotePlayer extends BasePlayer {
 
         //send a message to remote client requesting to cover piles
         RequestThrowInsMessage request = new RequestThrowInsMessage(possibleThrowInCards);
-        mRemoteClient.sendMessage(request.toJsonString());
+        mSocketClient.sendMessage(request.toJsonString());
 
         //waiting for client response (blocking)
-        String response = mRemoteClient.readMessage();
+        String response = mSocketClient.readMessage();
 
         return extractThrowInsFromResponse(response);
     }
@@ -130,7 +130,7 @@ public class RemotePlayer extends BasePlayer {
         return retList;
     }
 
-    public RemoteClient getRemoteClient() {
-        return mRemoteClient;
+    public SocketClient getSocketClient() {
+        return mSocketClient;
     }
 }

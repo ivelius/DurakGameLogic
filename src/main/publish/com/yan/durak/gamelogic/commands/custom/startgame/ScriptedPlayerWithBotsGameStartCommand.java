@@ -13,6 +13,7 @@ import com.yan.durak.gamelogic.commands.hooks.notifiers.broadcast.RemoteClientsC
 import com.yan.durak.gamelogic.commands.hooks.notifiers.unicast.RemoteClientsGameSetupUnicastHook;
 import com.yan.durak.gamelogic.commands.hooks.notifiers.unicast.RemoteClientsWrongCoverageNotifierUnicastHook;
 import com.yan.durak.gamelogic.communication.connection.RemoteClient;
+import com.yan.durak.gamelogic.communication.connection.SocketClient;
 
 /**
  * Created by Yan-Home on 12/22/2014.
@@ -21,9 +22,9 @@ import com.yan.durak.gamelogic.communication.connection.RemoteClient;
  */
 public class ScriptedPlayerWithBotsGameStartCommand extends BaseSessionCommand {
 
-    private RemoteClient playerZero;
-    private RemoteClient playerOne;
-    private RemoteClient playerTwo;
+    private SocketClient playerZero;
+    private SocketClient playerOne;
+    private SocketClient playerTwo;
 
     @Override
     public void execute() {
@@ -52,7 +53,7 @@ public class ScriptedPlayerWithBotsGameStartCommand extends BaseSessionCommand {
         getGameSession().executeCommand(startRoundCommand);
     }
 
-    private void addPlayer(RemoteClient playerClient) {
+    private void addPlayer(SocketClient playerClient) {
 
         //if there is no remote client for the player
         //add a bot player instead
@@ -86,7 +87,7 @@ public class ScriptedPlayerWithBotsGameStartCommand extends BaseSessionCommand {
 
     }
 
-    public void setRemotePlayers(RemoteClient playerZero, RemoteClient playerOne, RemoteClient playerTwo) {
+    public void setRemotePlayers(SocketClient playerZero, SocketClient playerOne, SocketClient playerTwo) {
         this.playerZero = playerZero;
         this.playerOne = playerOne;
         this.playerTwo = playerTwo;

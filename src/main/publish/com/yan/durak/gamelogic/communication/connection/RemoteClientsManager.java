@@ -54,7 +54,7 @@ public class RemoteClientsManager {
         mListeningPort = listeningPort;
     }
 
-    public ArrayList<RemoteClient> getRemoteClients() {
-        return mRemoteClients;
-    }
+//    public ArrayList<RemoteClient> getRemoteClients() {
+//        return mRemoteClients;
+//    }
 }
