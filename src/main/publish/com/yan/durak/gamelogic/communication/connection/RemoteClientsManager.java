@@ -10,7 +10,11 @@ import java.util.ArrayList;
  * <p/>
  * Implemented as a singleton.
  * Remote clients manager manages connected peers
+ *
+ * @deprecated Will be removed.
+ * This class serves no purpose anymore.
  */
+@Deprecated()
 public class RemoteClientsManager {
 
     private static final RemoteClientsManager INSTANCE = new RemoteClientsManager();
