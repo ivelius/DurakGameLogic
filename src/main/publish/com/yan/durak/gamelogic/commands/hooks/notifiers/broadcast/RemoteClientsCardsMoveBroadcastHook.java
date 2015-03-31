@@ -26,18 +26,8 @@ public class RemoteClientsCardsMoveBroadcastHook implements CommandHook<MoveCard
             if (player instanceof RemotePlayer) {
                 RemotePlayer remotePlayer = (RemotePlayer) player;
                 SocketClient client = remotePlayer.getSocketClient();
-                sendMessageToClient(jsonMsg, client);
+                client.sendMessage(jsonMsg);
             }
-        }
-    }
-
-    private void sendMessageToClient(String jsonMsg, SocketClient client) {
-        client.sendMessage(jsonMsg);
-        //TODO : imitate waiting
-        try {
-            Thread.sleep(600);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
     }
 }
