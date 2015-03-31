@@ -56,8 +56,10 @@ public class RemotePlayer extends BasePlayer {
     @Override
     public List<Pile> retaliatePiles(List<Pile> pilesToRetaliate) {
 
+        List<List<Card>> pilesAsCardLists = convertToCardsList(pilesToRetaliate);
+
         //send a message to remote client requesting to cover piles
-        RequestRetaliatePilesMessage request = new RequestRetaliatePilesMessage(pilesToRetaliate);
+        RequestRetaliatePilesMessage request = new RequestRetaliatePilesMessage(pilesAsCardLists);
         mSocketClient.sendMessage(request.toJsonString());
 
         //waiting for client response (blocking)
@@ -69,6 +71,21 @@ public class RemotePlayer extends BasePlayer {
         //TODO : validate that player has the card in hand ?
 
         return retaliatedPiles;
+    }
+
+    private List<List<Card>> convertToCardsList(List<Pile> pilesToRetaliate) {
+
+        ArrayList<List<Card>> ret = new ArrayList<>();
+
+        for (Pile pile : pilesToRetaliate) {
+            List<Card> cardList = new ArrayList<>();
+            for (Card card : pile.getCardsInPile()) {
+                cardList.add(card);
+            }
+            ret.add(cardList);
+        }
+
+        return ret;
     }
 
     @Override

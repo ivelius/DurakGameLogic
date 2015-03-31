@@ -2,10 +2,11 @@ package com.yan.durak.gamelogic.communication.protocol.messages;
 
 
 import com.google.gson.annotations.SerializedName;
-import com.yan.durak.gamelogic.cards.Pile;
+import com.yan.durak.gamelogic.cards.Card;
 import com.yan.durak.gamelogic.communication.protocol.BaseProtocolMessage;
 import com.yan.durak.gamelogic.communication.protocol.data.CardData;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,15 +16,23 @@ public class ResponseRetaliatePilesMessage extends BaseProtocolMessage<ResponseR
 
     public static final String MESSAGE_NAME = "responseRetaliatePilesMessage";
 
-    public ResponseRetaliatePilesMessage(List<Pile> pilesAfterRetaliation) {
+    public ResponseRetaliatePilesMessage(List<List<Card>> pilesAfterRetaliation) {
         super();
         setMessageName(MESSAGE_NAME);
         List<List<CardData>> piles = convertCardDataList(pilesAfterRetaliation);
         setMessageData(new ProtocolMessageData(piles));
     }
 
-    private List<List<CardData>> convertCardDataList(List<Pile> pilesAfterRetaliation) {
-        throw new UnsupportedOperationException();
+    private List<List<CardData>> convertCardDataList(List<List<Card>> pilesAfterRetaliation) {
+        List<List<CardData>> ret = new ArrayList<>();
+        for (List<Card> list : pilesAfterRetaliation) {
+            List<CardData> dataList = new ArrayList<>();
+            for (Card card : list) {
+                dataList.add(new CardData(card.getRank(),card.getSuit()));
+            }
+            ret.add(dataList);
+        }
+        return ret;
     }
 
     public static class ProtocolMessageData {

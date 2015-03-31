@@ -40,5 +40,9 @@ public class RequestCardForAttackMessage extends BaseProtocolMessage<RequestCard
         public ProtocolMessageData(List<CardData> cardsInHand) {
             mCardsInHand = cardsInHand;
         }
+
+        public List<CardData> getCardsInHand() {
+            return mCardsInHand;
+        }
     }
 }

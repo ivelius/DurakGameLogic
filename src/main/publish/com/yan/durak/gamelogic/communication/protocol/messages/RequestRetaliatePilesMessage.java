@@ -3,7 +3,6 @@ package com.yan.durak.gamelogic.communication.protocol.messages;
 
 import com.google.gson.annotations.SerializedName;
 import com.yan.durak.gamelogic.cards.Card;
-import com.yan.durak.gamelogic.cards.Pile;
 import com.yan.durak.gamelogic.communication.protocol.BaseProtocolMessage;
 import com.yan.durak.gamelogic.communication.protocol.data.CardData;
 
@@ -17,18 +16,18 @@ public class RequestRetaliatePilesMessage extends BaseProtocolMessage<RequestRet
 
     public static final String MESSAGE_NAME = "requestRetaliatePiles";
 
-    public RequestRetaliatePilesMessage(List<Pile> pilesBeforeRetaliation) {
+    public RequestRetaliatePilesMessage(List<List<Card>> pilesBeforeRetaliation) {
         super();
         setMessageName(MESSAGE_NAME);
         List<List<CardData>> piles = convertCardDataList(pilesBeforeRetaliation);
         setMessageData(new ProtocolMessageData(piles));
     }
 
-    private List<List<CardData>> convertCardDataList(List<Pile> pilesBeforeRetaliation) {
+    private List<List<CardData>> convertCardDataList(List<List<Card>> pilesBeforeRetaliation) {
         List<List<CardData>> retList = new ArrayList<>();
-        for (Pile pile : pilesBeforeRetaliation) {
+        for (List<Card> pile : pilesBeforeRetaliation) {
             List<CardData> cardDataList = new ArrayList<>();
-            for (Card card : pile.getCardsInPile()) {
+            for (Card card : pile) {
                 cardDataList.add(new CardData(card.getRank(), card.getSuit()));
             }
             retList.add(cardDataList);
@@ -44,6 +43,10 @@ public class RequestRetaliatePilesMessage extends BaseProtocolMessage<RequestRet
 
         public ProtocolMessageData(List<List<CardData>> piles) {
             mPilesBeforeRetaliation = piles;
+        }
+
+        public List<List<CardData>> getPilesBeforeRetaliation() {
+            return mPilesBeforeRetaliation;
         }
     }
 }

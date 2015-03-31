@@ -32,5 +32,17 @@ public class CardMovedProtocolMessage extends BaseProtocolMessage<CardMovedProto
             mFromPileIndex = fromPileIndex;
             mToPileIndex = toPileIndex;
         }
+
+        public CardData getMovedCard() {
+            return mMovedCard;
+        }
+
+        public int getFromPileIndex() {
+            return mFromPileIndex;
+        }
+
+        public int getToPileIndex() {
+            return mToPileIndex;
+        }
     }
 }
