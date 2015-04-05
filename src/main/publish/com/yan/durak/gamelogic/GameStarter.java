@@ -1,7 +1,7 @@
 package com.yan.durak.gamelogic;
 
 
-import com.yan.durak.gamelogic.commands.custom.startgame.ScriptedPlayerWithBotsGameStartCommand;
+import com.yan.durak.gamelogic.commands.custom.startgame.GameStartCommand;
 import com.yan.durak.gamelogic.communication.connection.SocketClient;
 import com.yan.durak.gamelogic.game.GameRules;
 import com.yan.durak.gamelogic.game.GameSession;
@@ -22,7 +22,7 @@ public class GameStarter {
     public GameStarter(SocketClient playerZero, SocketClient playerOne, SocketClient playerTwo) {
         mGameSession = new GameSession();
         mGameSession.setGameRules(new GameRules());
-        ScriptedPlayerWithBotsGameStartCommand gameStartCommand = new ScriptedPlayerWithBotsGameStartCommand();
+        GameStartCommand gameStartCommand = new GameStartCommand();
         gameStartCommand.setRemotePlayers(playerZero,playerOne,playerTwo);
         mGameSession.addCommand(gameStartCommand);
     }

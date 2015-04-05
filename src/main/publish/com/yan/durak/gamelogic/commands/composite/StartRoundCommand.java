@@ -9,7 +9,6 @@ import com.yan.durak.gamelogic.commands.control.RetaliationExecutionControlComma
 import com.yan.durak.gamelogic.commands.control.RetaliationValidationControlCommand;
 import com.yan.durak.gamelogic.commands.custom.*;
 import com.yan.durak.gamelogic.player.Player;
-import com.yan.durak.gamelogic.utils.LogUtils;
 
 /**
  * Created by Yan-Home on 12/25/2014.
@@ -42,9 +41,11 @@ public class StartRoundCommand extends BaseSessionCommand {
         getGameSession().executeCommand(winningConditionCommand);
 
         if (winningConditionCommand.isGameOver()) {
-            LogUtils.log("GAME IS OVER !!! Losing player is " + winningConditionCommand.getLoosingPlayerIndex());
 
-            //TODO : Do something else ?
+            //Finish the game
+            FinishGameCommand finishGameCommand = new FinishGameCommand();
+            finishGameCommand.setLoosingPlayerIndex(winningConditionCommand.getLoosingPlayerIndex());
+            getGameSession().executeCommand(finishGameCommand);
         } else {
 
             //proceed to the next round

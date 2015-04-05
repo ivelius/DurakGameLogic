@@ -7,20 +7,20 @@ import com.yan.durak.gamelogic.commands.composite.StartRoundCommand;
 import com.yan.durak.gamelogic.commands.core.AddBotPlayerCommand;
 import com.yan.durak.gamelogic.commands.core.AddRemotePlayerCommand;
 import com.yan.durak.gamelogic.commands.custom.IdentifyNextRoundPlayersCommand;
+import com.yan.durak.gamelogic.commands.hooks.notifiers.broadcast.GameOverBroadcastHook;
 import com.yan.durak.gamelogic.commands.hooks.notifiers.broadcast.PlayerActionAttackBroadcastHook;
 import com.yan.durak.gamelogic.commands.hooks.notifiers.broadcast.PlayerActionRetaliateBroadcastHook;
 import com.yan.durak.gamelogic.commands.hooks.notifiers.broadcast.RemoteClientsCardsMoveBroadcastHook;
 import com.yan.durak.gamelogic.commands.hooks.notifiers.unicast.RemoteClientsGameSetupUnicastHook;
 import com.yan.durak.gamelogic.commands.hooks.notifiers.unicast.RemoteClientsWrongCoverageNotifierUnicastHook;
-import com.yan.durak.gamelogic.communication.connection.RemoteClient;
 import com.yan.durak.gamelogic.communication.connection.SocketClient;
 
 /**
  * Created by Yan-Home on 12/22/2014.
  * <p/>
- * This scenario starts a game with 2 bots and one human players.
+ * This command starts the game with provided player clients.
  */
-public class ScriptedPlayerWithBotsGameStartCommand extends BaseSessionCommand {
+public class GameStartCommand extends BaseSessionCommand {
 
     private SocketClient playerZero;
     private SocketClient playerOne;
@@ -84,6 +84,9 @@ public class ScriptedPlayerWithBotsGameStartCommand extends BaseSessionCommand {
 
         //add hook that will notify active player of wrong retaliation coverage
         getGameSession().addPostHook(new RemoteClientsWrongCoverageNotifierUnicastHook());
+
+        //add post hook that will notify of game over conditions
+        getGameSession().addPostHook(new GameOverBroadcastHook());
 
     }
 
