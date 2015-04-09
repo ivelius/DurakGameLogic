@@ -4,6 +4,7 @@ package com.yan.durak.gamelogic.communication.protocol.messages;
 import com.google.gson.annotations.SerializedName;
 import com.yan.durak.gamelogic.communication.protocol.BaseProtocolMessage;
 import com.yan.durak.gamelogic.communication.protocol.data.CardData;
+import com.yan.durak.gamelogic.communication.protocol.data.PlayerData;
 
 /**
  * Created by Yan-Home on 12/24/2014.
@@ -12,32 +13,30 @@ public class GameSetupProtocolMessage extends BaseProtocolMessage<GameSetupProto
 
     public static final String MESSAGE_NAME = "gameSetup";
 
-    /**
-     * @param playerPileIndex index of a pile that belongs to relieving player
-     */
-    public GameSetupProtocolMessage(int playerPileIndex, String trumpCardRank, String trumpCardSuit) {
+
+    public GameSetupProtocolMessage(PlayerData myPlayerData, CardData trumpCard) {
         super();
         setMessageName(MESSAGE_NAME);
-        setMessageData(new ProtocolMessageData(playerPileIndex, new CardData(trumpCardRank, trumpCardSuit)));
+        setMessageData(new ProtocolMessageData(myPlayerData, trumpCard));
     }
 
     public static class ProtocolMessageData {
 
         //TODO : in future perhaps we will need more information
 
-        @SerializedName("myPileIndex")
-        int mMyPileIndex;
+        @SerializedName("myPlayerData")
+        PlayerData mMyPlayerData;
 
         @SerializedName("trumpCard")
         CardData mTrumpCard;
 
-        public ProtocolMessageData(int myPileIndex, CardData trumpCard) {
-            mMyPileIndex = myPileIndex;
+        public ProtocolMessageData(PlayerData myPlayerData, CardData trumpCard) {
+            mMyPlayerData = myPlayerData;
             mTrumpCard = trumpCard;
         }
 
-        public int getMyPileIndex() {
-            return mMyPileIndex;
+        public PlayerData getMyPlayerData() {
+            return mMyPlayerData;
         }
 
         public CardData getTrumpCard() {

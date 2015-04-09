@@ -12,23 +12,23 @@ public class GameOverProtocolMessage extends BaseProtocolMessage<GameOverProtoco
 
     public static final String MESSAGE_NAME = "gameOver";
 
-    public GameOverProtocolMessage(PlayerData loosingPlayer) {
+    public GameOverProtocolMessage(PlayerData loosingPlayerData) {
         super();
         setMessageName(MESSAGE_NAME);
-        setMessageData(new ProtocolMessageData(loosingPlayer));
+        setMessageData(new ProtocolMessageData(loosingPlayerData));
     }
 
     public static class ProtocolMessageData {
 
         @SerializedName("loosingPlayer")
-        PlayerData mMovedCard;
+        PlayerData mLoosingPlayer;
 
-        public ProtocolMessageData(PlayerData movedCard) {
-            mMovedCard = movedCard;
+        public ProtocolMessageData(PlayerData loosingPlayer) {
+            mLoosingPlayer = loosingPlayer;
         }
 
-        public PlayerData getMovedCard() {
-            return mMovedCard;
+        public PlayerData getLoosingPlayer() {
+            return mLoosingPlayer;
         }
     }
 }

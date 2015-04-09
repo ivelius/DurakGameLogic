@@ -13,7 +13,6 @@ public class CheckWinningConditionCommand extends BaseSessionCommand {
     private boolean mGameOver;
     private int mLoosingPlayerIndex = -1;
 
-
     @Override
     public void execute() {
 

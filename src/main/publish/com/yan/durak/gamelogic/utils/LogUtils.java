@@ -5,7 +5,11 @@ package com.yan.durak.gamelogic.utils;
  */
 public class LogUtils {
 
+    private static final boolean LOGGING_ENABLED = false;
+
     public static final void log(String msg) {
+        if (!LOGGING_ENABLED)
+            return;
         System.out.println(msg);
     }
 }

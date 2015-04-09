@@ -7,14 +7,22 @@ import com.google.gson.annotations.SerializedName;
  */
 public class PlayerData {
 
-    @SerializedName("playerIndex")
-    private int mPlayerIndex;
+    @SerializedName("playerIndexInGame")
+    private int mPlayerIndexInGame;
 
-    public PlayerData(int playerIndex) {
-        mPlayerIndex = playerIndex;
+    @SerializedName("playerPileIndex")
+    private int mPlayerPileIndex;
+
+    public PlayerData(int playerIndexInGame, int playerPileIndex) {
+        mPlayerIndexInGame = playerIndexInGame;
+        mPlayerPileIndex = playerPileIndex;
     }
 
-    public int getPlayerIndex() {
-        return mPlayerIndex;
+    public int getPlayerIndexInGame() {
+        return mPlayerIndexInGame;
+    }
+
+    public int getPlayerPileIndex() {
+        return mPlayerPileIndex;
     }
 }

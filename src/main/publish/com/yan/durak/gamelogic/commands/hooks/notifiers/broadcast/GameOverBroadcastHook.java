@@ -24,8 +24,12 @@ public class GameOverBroadcastHook implements CommandHook<FinishGameCommand> {
     @Override
     public void onHookTrigger(FinishGameCommand hookCommand) {
 
+        //get loosing player data
+        int loosingPlayerIndex = hookCommand.getLoosingPlayerIndex();
+        int loosingPlayerPileIndex = hookCommand.getGameSession().getPlayers().get(loosingPlayerIndex).getPileIndex();
+
         //create json string from the message
-        String jsonMsg = new GameOverProtocolMessage(new PlayerData(hookCommand.getLoosingPlayerIndex())).toJsonString();
+        String jsonMsg = new GameOverProtocolMessage(new PlayerData(loosingPlayerIndex, loosingPlayerPileIndex)).toJsonString();
 
         for (Player player : hookCommand.getGameSession().getPlayers()) {
             if (player instanceof RemotePlayer) {

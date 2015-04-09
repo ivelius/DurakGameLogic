@@ -16,7 +16,6 @@ public class FinishGameCommand extends BaseSessionCommand {
     @Override
     public void execute() {
         LogUtils.log("GAME IS OVER !!! Losing player is " + mLoosingPlayerIndex);
-
         //TODO : any finishing operations can happen here...
     }
 

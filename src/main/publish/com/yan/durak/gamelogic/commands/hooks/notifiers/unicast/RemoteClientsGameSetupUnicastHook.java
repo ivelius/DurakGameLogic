@@ -6,6 +6,8 @@ import com.yan.durak.gamelogic.cards.Pile;
 import com.yan.durak.gamelogic.commands.core.AddRemotePlayerCommand;
 import com.yan.durak.gamelogic.commands.hooks.CommandHook;
 import com.yan.durak.gamelogic.communication.connection.SocketClient;
+import com.yan.durak.gamelogic.communication.protocol.data.CardData;
+import com.yan.durak.gamelogic.communication.protocol.data.PlayerData;
 import com.yan.durak.gamelogic.communication.protocol.messages.GameSetupProtocolMessage;
 import com.yan.durak.gamelogic.player.RemotePlayer;
 
@@ -37,7 +39,8 @@ public class RemoteClientsGameSetupUnicastHook implements CommandHook<AddRemoteP
         Card trumpCard = cardsInStockPile.get(0);
 
         //prepare game setup message
-        String jsonMsg = new GameSetupProtocolMessage(addedPlayer.getPileIndex(), trumpCard.getRank(), trumpCard.getSuit()).toJsonString();
+        String jsonMsg = new GameSetupProtocolMessage(
+                new PlayerData(addedPlayer.getGameIndex(), addedPlayer.getPileIndex()), new CardData(trumpCard.getRank(), trumpCard.getSuit())).toJsonString();
 
         //send game setup message to client
         client.sendMessage(jsonMsg);
