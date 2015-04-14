@@ -26,6 +26,10 @@ public class RemoteClientsWrongCoverageNotifierUnicastHook implements CommandHoo
     @Override
     public void onHookTrigger(RetaliationValidationControlCommand hookCommand) {
 
+        //we don't want to send wrong retaliation if it is actually not wrong
+        if(hookCommand.getFailedValidationsList().isEmpty())
+            return;
+
         //obtain retaliated player
         Player retaliatedPlayer = hookCommand.getRetaliatedPlayer();
 
