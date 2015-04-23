@@ -7,10 +7,7 @@ import com.yan.durak.gamelogic.commands.composite.StartRoundCommand;
 import com.yan.durak.gamelogic.commands.core.AddBotPlayerCommand;
 import com.yan.durak.gamelogic.commands.core.AddRemotePlayerCommand;
 import com.yan.durak.gamelogic.commands.custom.IdentifyNextRoundPlayersCommand;
-import com.yan.durak.gamelogic.commands.hooks.notifiers.broadcast.GameOverBroadcastHook;
-import com.yan.durak.gamelogic.commands.hooks.notifiers.broadcast.PlayerActionAttackBroadcastHook;
-import com.yan.durak.gamelogic.commands.hooks.notifiers.broadcast.PlayerActionRetaliateBroadcastHook;
-import com.yan.durak.gamelogic.commands.hooks.notifiers.broadcast.RemoteClientsCardsMoveBroadcastHook;
+import com.yan.durak.gamelogic.commands.hooks.notifiers.broadcast.*;
 import com.yan.durak.gamelogic.commands.hooks.notifiers.unicast.RemoteClientsGameSetupUnicastHook;
 import com.yan.durak.gamelogic.commands.hooks.notifiers.unicast.RemoteClientsWrongCoverageNotifierUnicastHook;
 import com.yan.durak.gamelogic.communication.connection.SocketClient;
@@ -81,6 +78,7 @@ public class GameStartCommand extends BaseSessionCommand {
         //That allows the client to change the UI state accordingly
         getGameSession().addPreHook(new PlayerActionAttackBroadcastHook());
         getGameSession().addPreHook(new PlayerActionRetaliateBroadcastHook());
+        getGameSession().addPreHook(new PlayerActionThrowInBroadcastHook());
 
         //add hook that will notify active player of wrong retaliation coverage
         getGameSession().addPostHook(new RemoteClientsWrongCoverageNotifierUnicastHook());

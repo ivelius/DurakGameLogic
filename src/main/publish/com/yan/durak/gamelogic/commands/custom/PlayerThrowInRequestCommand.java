@@ -70,7 +70,7 @@ public class PlayerThrowInRequestCommand extends BaseSessionCommand {
         return mThrowInCards;
     }
 
-    public int getThrowingInPlayer() {
+    public int getThrowingInPlayerIndex() {
         return mThrowingInPlayer;
     }
 

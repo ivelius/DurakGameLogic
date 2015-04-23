@@ -15,7 +15,7 @@ public class PlayerTakesActionMessage extends BaseProtocolMessage<PlayerTakesAct
      * Defines an action that represents what player is currently doing
      */
     public enum PlayerAction {
-        ATTACK, RETALIATION, THROW_IN
+        ATTACK, RETALIATION, THROW_IN;
     }
 
     public PlayerTakesActionMessage(int playerIndex, PlayerAction action) {

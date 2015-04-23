@@ -24,7 +24,7 @@ public class PlayerThrowInRequestControlCommand extends BaseControlCommand<Playe
         PlayerThrowInRequestCommand throwInRequestCommand = searchForRecentControlledCommand();
 
         //find attacking player by index
-        Player throwingPlayer = getGameSession().getPlayers().get(throwInRequestCommand.getThrowingInPlayer());
+        Player throwingPlayer = getGameSession().getPlayers().get(throwInRequestCommand.getThrowingInPlayerIndex());
 
         for (Card throwInCard : throwInRequestCommand.getThrowInCards()) {
 
