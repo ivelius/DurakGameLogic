@@ -99,7 +99,7 @@ public class RemotePlayer extends BasePlayer {
             return possibleThrowInCards;
 
         //send a message to remote client requesting to cover piles
-        RequestThrowInsMessage request = new RequestThrowInsMessage(possibleThrowInCards);
+        RequestThrowInsMessage request = new RequestThrowInsMessage(possibleThrowInCards,allowedAmountOfCardsToThrowIn);
         mSocketClient.sendMessage(request.toJsonString());
 
         //waiting for client response (blocking)
