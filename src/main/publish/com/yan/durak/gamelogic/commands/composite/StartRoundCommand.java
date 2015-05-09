@@ -191,7 +191,14 @@ public class StartRoundCommand extends BaseSessionCommand {
         CheckFieldPilesStatusCommand fieldPilesStatus = new CheckFieldPilesStatusCommand();
         getGameSession().executeCommand(fieldPilesStatus);
         int retaliatorPileCardsInHand = getGameSession().getPilesStack().get(getGameSession().getPlayers().get(mRoundDefendingPlayerIndex).getPileIndex()).getCardsInPile().size();
-        return retaliatorPileCardsInHand - fieldPilesStatus.getUncoveredPiles().size();
+
+        //get field piles status
+        int uncoveredFieldPilesAmount = fieldPilesStatus.getUncoveredPiles().size();
+        int coveredFieldPilesAmount = fieldPilesStatus.getCoveredPiles().size();
+        int totalPilesOnField = uncoveredFieldPilesAmount + coveredFieldPilesAmount;
+
+        //calculate the amount that is allowed to be throwed in
+        return Math.min(getGameSession().getGameRules().getMaxPilesOnFieldAmount() - totalPilesOnField, retaliatorPileCardsInHand - uncoveredFieldPilesAmount);
     }
 
     /**

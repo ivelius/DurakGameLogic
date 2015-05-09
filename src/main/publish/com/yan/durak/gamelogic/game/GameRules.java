@@ -8,4 +8,7 @@ public class GameRules {
     public int getAmountOfCardsInPlayerHands(){
         return 6;
     }
+    public int getMaxPilesOnFieldAmount(){
+        return 6;
+    }
 }
