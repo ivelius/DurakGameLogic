@@ -23,7 +23,7 @@ public class PlayerActionRetaliateBroadcastHook implements CommandHook<PlayerRet
     public void onHookTrigger(PlayerRetaliationRequestCommand hookCommand) {
 
         //create json string from the message
-        String jsonMsg = new PlayerTakesActionMessage(hookCommand.getPlayerIndex(), PlayerTakesActionMessage.PlayerAction.RETALIATION).toJsonString();
+        String jsonMsg = new PlayerTakesActionMessage(hookCommand.getPlayerIndex(), PlayerTakesActionMessage.PlayerAction.RETALIATION_START).toJsonString();
 
         for (Player player : hookCommand.getGameSession().getPlayers()) {
             if (player instanceof RemotePlayer) {

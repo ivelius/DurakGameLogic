@@ -15,7 +15,31 @@ public class PlayerTakesActionMessage extends BaseProtocolMessage<PlayerTakesAct
      * Defines an action that represents what player is currently doing
      */
     public enum PlayerAction {
-        ATTACK, RETALIATION, THROW_IN;
+        /**
+         * Player requested to attack with a card
+         */
+        ATTACK_START,
+        /**
+         * Player requested to retaliate cards on the field
+         */
+        RETALIATION_START,
+        /**
+         * Player requested to pick cards to throw in
+         */
+        THROW_IN_START,
+        /**
+         * Player decided do not throw in anything
+         */
+        THROW_IN_PASS,
+        /**
+         * Player decided to throw in cards
+         */
+        THROW_IN_END,
+
+        /**
+         * Player decided to take cards
+         */
+        PLAYER_TAKES_CARDS
     }
 
     public PlayerTakesActionMessage(int playerIndex, PlayerAction action) {

@@ -16,6 +16,9 @@ import java.util.List;
  */
 public class BotPlayer extends BasePlayer {
 
+    public static final int MIN_THINKING_MILLISECONDS = 1500;
+    public static final int MAX_THINKING_MILLISECONDS = 3500;
+
     public BotPlayer(int indexInGame, GameSession gameSession, int pileIndex) {
         super(indexInGame, gameSession, pileIndex);
     }
@@ -27,6 +30,9 @@ public class BotPlayer extends BasePlayer {
         if (playerPile.getCardsInPile().isEmpty())
             return null;
 
+        //TODO : simulate thinking
+        simulateThinking();
+
         //just pick a random card , since this bot is not very smart
         Card cardForAttack = playerPile.getCardsInPile().get(MathHelper.randomInRange(0, playerPile.getCardsInPile().size() - 1));
         return cardForAttack;
@@ -35,6 +41,9 @@ public class BotPlayer extends BasePlayer {
 
     @Override
     public List<Pile> retaliatePiles(List<Pile> pilesToRetaliate) {
+
+        //TODO : simulate thinking
+        simulateThinking();
 
         //create a deep copy of original piles
         List<Pile> pilesAfterRetaliation = createDeepCopyOfPiles(pilesToRetaliate);
@@ -85,8 +94,20 @@ public class BotPlayer extends BasePlayer {
         return pilesAfterRetaliation;
     }
 
+    private void simulateThinking() {
+        try {
+            Thread.sleep(MathHelper.randomInRange(MIN_THINKING_MILLISECONDS, MAX_THINKING_MILLISECONDS));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public List<Card> getThrowInCards(Collection<String> allowedRanksToThrowIn, int allowedAmountOfCardsToThrowIn) {
+
+        //TODO : simulate thinking
+        simulateThinking();
+
         List<Card> retList = getPossibleThrowInCards(allowedRanksToThrowIn);
         return (retList.size() > allowedAmountOfCardsToThrowIn) ? retList.subList(0, allowedAmountOfCardsToThrowIn) : retList;
     }

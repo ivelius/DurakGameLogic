@@ -78,7 +78,11 @@ public class GameStartCommand extends BaseSessionCommand {
         //That allows the client to change the UI state accordingly
         getGameSession().addPreHook(new PlayerActionAttackBroadcastHook());
         getGameSession().addPreHook(new PlayerActionRetaliateBroadcastHook());
-        getGameSession().addPreHook(new PlayerActionThrowInBroadcastHook());
+        getGameSession().addPreHook(new PlayerActionThrowInBroadcastPreHook());
+        getGameSession().addPreHook(new PlayerActionTakeCardsBroadcastHook());
+
+        //notify of player throw in decision
+        getGameSession().addPostHook(new PlayerActionThrowInBroadcastPostHook());
 
         //add hook that will notify active player of wrong retaliation coverage
         getGameSession().addPostHook(new RemoteClientsWrongCoverageNotifierUnicastHook());

@@ -131,13 +131,19 @@ public class StartRoundCommand extends BaseSessionCommand {
 
     private void onNotSuccessfulRetaliation() {
 
+        //get the defending player
+        Player defendingPlayer = getGameSession().getPlayers().get(mRoundDefendingPlayerIndex);
+
+        //Defending player did not cover all the cards ,he states his intention to take cards, no actual cards movement will be done in this command
+        PlayerTakesCardsFromFieldCommand playerTakesCardsFromFieldCommand = new PlayerTakesCardsFromFieldCommand();
+        playerTakesCardsFromFieldCommand.setTakingPlayer(defendingPlayer);
+        getGameSession().executeCommand(playerTakesCardsFromFieldCommand);
+
         //before player will take all the cards
         //other player will have a chance to throw in
         performThrowIn();
 
-        Player defendingPlayer = getGameSession().getPlayers().get(mRoundDefendingPlayerIndex);
-
-        //player did not cover all the cards , all field cards will go to user hand .
+        // all field cards will go to user hand .
         MoveAllFieldPilesCardsCommand moveAllFieldPilesCardsCommand = new MoveAllFieldPilesCardsCommand();
         moveAllFieldPilesCardsCommand.setToPileIndex(defendingPlayer.getPileIndex());
         getGameSession().executeCommand(moveAllFieldPilesCardsCommand);
