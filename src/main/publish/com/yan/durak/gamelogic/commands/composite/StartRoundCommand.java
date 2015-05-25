@@ -1,6 +1,7 @@
 package com.yan.durak.gamelogic.commands.composite;
 
 
+import com.yan.durak.gamelogic.cards.CardsHelper;
 import com.yan.durak.gamelogic.cards.Pile;
 import com.yan.durak.gamelogic.commands.BaseSessionCommand;
 import com.yan.durak.gamelogic.commands.control.AttackRequestControlCommand;
@@ -9,6 +10,8 @@ import com.yan.durak.gamelogic.commands.control.RetaliationExecutionControlComma
 import com.yan.durak.gamelogic.commands.control.RetaliationValidationControlCommand;
 import com.yan.durak.gamelogic.commands.custom.*;
 import com.yan.durak.gamelogic.player.Player;
+
+import java.util.Collection;
 
 /**
  * Created by Yan-Home on 12/25/2014.
@@ -93,9 +96,20 @@ public class StartRoundCommand extends BaseSessionCommand {
         if (amountOfCardsAllowedToThrowIn < 1)
             return 0;
 
+        //If player don't have cards that he can throw in , than skip this step
+        Collection<String> allowedRanksToThrowIn = PlayerThrowInRequestCommand.findAllowedRanksToThrowIn(getGameSession());
+
+        //find pile of player that is requested to throw in
+        Pile pile = getGameSession().getPilesStack().get(getGameSession().getPlayers().get(throwingInPlayer).getPileIndex());
+
+        //when player does not have any card that he can possibly throw in , just skip this request
+        if (!CardsHelper.isOneOfTheRanksInPile(allowedRanksToThrowIn, pile.getCardsInPile()))
+            return 0;
+
         PlayerThrowInRequestCommand throwInRequestCommand = new PlayerThrowInRequestCommand();
         throwInRequestCommand.setThrowingInPlayer(throwingInPlayer);
         throwInRequestCommand.setThrowInAmount(amountOfCardsAllowedToThrowIn);
+        throwInRequestCommand.setAllowedRanksToThrowIn(allowedRanksToThrowIn);
         getGameSession().executeCommand(throwInRequestCommand);
 
         //control the throw in command

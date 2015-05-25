@@ -43,7 +43,6 @@ public abstract class BasePlayer implements Player {
     public List<Card> getPossibleThrowInCards(Collection<String> allowedRanksToThrowIn) {
 
         List<Card> retList = new ArrayList<>();
-
         Pile playerPile = mGameSession.getPilesStack().get(getPileIndex());
 
         //just simply add every possible rank

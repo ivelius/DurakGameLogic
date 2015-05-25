@@ -4,6 +4,7 @@ package com.yan.durak.gamelogic.commands.custom;
 import com.yan.durak.gamelogic.cards.Card;
 import com.yan.durak.gamelogic.cards.Pile;
 import com.yan.durak.gamelogic.commands.BaseSessionCommand;
+import com.yan.durak.gamelogic.game.GameSession;
 import com.yan.durak.gamelogic.player.Player;
 
 import java.util.ArrayList;
@@ -23,20 +24,18 @@ public class PlayerThrowInRequestCommand extends BaseSessionCommand {
     private int mThrowingInPlayer;
     private int mThrowInAmount;
     private List<Card> mThrowInCards;
+    private Collection<String> mAllowedRanksToThrowIn;
 
     @Override
     public void execute() {
-
-        Collection<String> allowedRanksToThrowIn = findAllowedRanksToThrowIn();
-
         Player player = getGameSession().getPlayers().get(mThrowingInPlayer);
-        mThrowInCards = player.getThrowInCards(allowedRanksToThrowIn, mThrowInAmount);
+        mThrowInCards = player.getThrowInCards(mAllowedRanksToThrowIn, mThrowInAmount);
     }
 
-    private Collection<String> findAllowedRanksToThrowIn() {
+    public static Collection<String> findAllowedRanksToThrowIn(GameSession gameSession) {
 
         Collection<String> retList = new HashSet<>();
-        for (Pile pile : getGameSession().getPilesStack()) {
+        for (Pile pile : gameSession.getPilesStack()) {
             if (pile.hasTag(Pile.PileTags.FIELD_PILE)) {
                 for (Card card : pile.getCardsInPile()) {
                     retList.add(card.getRank());
@@ -76,5 +75,13 @@ public class PlayerThrowInRequestCommand extends BaseSessionCommand {
 
     public int getThrowInAmount() {
         return mThrowInAmount;
+    }
+
+    public Collection<String> getAllowedRanksToThrowIn() {
+        return mAllowedRanksToThrowIn;
+    }
+
+    public void setAllowedRanksToThrowIn(Collection<String> allowedRanksToThrowIn) {
+        mAllowedRanksToThrowIn = allowedRanksToThrowIn;
     }
 }

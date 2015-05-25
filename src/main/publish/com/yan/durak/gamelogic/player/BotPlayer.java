@@ -108,6 +108,10 @@ public class BotPlayer extends BasePlayer {
         //TODO : simulate thinking
         simulateThinking();
 
+        //Bot player has 50/50 chance to pass his throw in
+        if (MathHelper.randomInRange(0, 500) > 250)
+            return new ArrayList<>();
+
         List<Card> retList = getPossibleThrowInCards(allowedRanksToThrowIn);
         return (retList.size() > allowedAmountOfCardsToThrowIn) ? retList.subList(0, allowedAmountOfCardsToThrowIn) : retList;
     }

@@ -99,4 +99,22 @@ public class CardsHelper {
         }
         return filteredCards;
     }
+
+    /**
+     * Does not modify parameters.
+     *
+     * @param ranks collection of ranks
+     * @param cards collection of cards to be checked
+     * @return true if one or more ranks found among the provided collection of cards
+     */
+    public static boolean isOneOfTheRanksInPile(Collection<String> ranks, Collection<Card> cards) {
+        for (Card cardInPlayerPile : cards) {
+            for (String allowedRank : ranks) {
+                if (cardInPlayerPile.getRank().equals(allowedRank)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }
