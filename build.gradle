@@ -15,6 +15,7 @@ repositories {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
     compile 'com.google.code.gson:gson:2.2.+'
+    compile 'com.koushikdutta.async:androidasync:2.+'
 }
 
 //we can specify multiple source sets
@@ -45,6 +46,7 @@ publishing {
     //all publications defined here
     publications {
 
+        //TODO : Run "gradle publish" to upload the Jar to maven repo
         //we call this publication "simple" , and sayin that it is a maven publication
         simple(MavenPublication) {
             groupId 'com.yan.durak'
@@ -67,6 +69,8 @@ publishing {
         }
     }
 }
+
+
 
 task openTestReportBrowser << {
     java.awt.Desktop.desktop.browse "E:/GitHubCheckouts/DurakGameLogic/build/reports/tests/index.html".toURI()
