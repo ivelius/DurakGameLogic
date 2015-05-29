@@ -3,7 +3,7 @@ package com.yan.durak.gamelogic.commands.hooks.notifiers.broadcast;
 
 import com.yan.durak.gamelogic.commands.custom.PlayerTakesCardsFromFieldCommand;
 import com.yan.durak.gamelogic.commands.hooks.CommandHook;
-import com.yan.durak.gamelogic.communication.connection.SocketClient;
+import com.yan.durak.gamelogic.communication.connection.ISocketClient;
 import com.yan.durak.gamelogic.communication.protocol.messages.PlayerTakesActionMessage;
 import com.yan.durak.gamelogic.player.Player;
 import com.yan.durak.gamelogic.player.RemotePlayer;
@@ -27,7 +27,7 @@ public class PlayerActionTakeCardsBroadcastHook implements CommandHook<PlayerTak
         for (Player player : hookCommand.getGameSession().getPlayers()) {
             if (player instanceof RemotePlayer) {
                 RemotePlayer remotePlayer = (RemotePlayer) player;
-                SocketClient client = remotePlayer.getSocketClient();
+                ISocketClient client = remotePlayer.getSocketClient();
                 client.sendMessage(jsonMsg);
             }
         }

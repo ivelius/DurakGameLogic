@@ -9,7 +9,7 @@ import java.net.Socket;
 /**
  * Created by Yan-Home on 12/24/2014.
  */
-public class RemoteClient implements SocketClient {
+public class RemoteClient implements ISocketClient {
 
     private final Socket mSocket;
     private PrintWriter mOutputWriter;

@@ -4,7 +4,7 @@ package com.yan.durak.gamelogic.player;
 import com.google.gson.Gson;
 import com.yan.durak.gamelogic.cards.Card;
 import com.yan.durak.gamelogic.cards.Pile;
-import com.yan.durak.gamelogic.communication.connection.SocketClient;
+import com.yan.durak.gamelogic.communication.connection.ISocketClient;
 import com.yan.durak.gamelogic.communication.protocol.data.CardData;
 import com.yan.durak.gamelogic.communication.protocol.messages.*;
 import com.yan.durak.gamelogic.game.GameSession;
@@ -18,10 +18,10 @@ import java.util.List;
  */
 public class RemotePlayer extends BasePlayer {
 
-    private SocketClient mSocketClient;
+    private ISocketClient mSocketClient;
     private Gson mGson;
 
-    public RemotePlayer(int indexInGame, GameSession gameSession, int pileIndex, SocketClient remoteClient) {
+    public RemotePlayer(int indexInGame, GameSession gameSession, int pileIndex, ISocketClient remoteClient) {
         super(indexInGame, gameSession, pileIndex);
         mSocketClient = remoteClient;
         mGson = new Gson();
@@ -147,7 +147,7 @@ public class RemotePlayer extends BasePlayer {
         return retList;
     }
 
-    public SocketClient getSocketClient() {
+    public ISocketClient getSocketClient() {
         return mSocketClient;
     }
 }
