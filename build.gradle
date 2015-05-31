@@ -15,7 +15,6 @@ repositories {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
     compile 'com.google.code.gson:gson:2.2.+'
-    compile 'com.koushikdutta.async:androidasync:2.+'
 }
 
 //we can specify multiple source sets
