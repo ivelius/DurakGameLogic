@@ -3,7 +3,7 @@ package com.yan.durak.gamelogic.commands.hooks.notifiers.unicast;
 
 import com.yan.durak.gamelogic.commands.control.RetaliationValidationControlCommand;
 import com.yan.durak.gamelogic.commands.hooks.CommandHook;
-import com.yan.durak.gamelogic.communication.connection.ISocketClient;
+import com.yan.durak.gamelogic.communication.connection.IRemoteClient;
 import com.yan.durak.gamelogic.communication.protocol.data.CardData;
 import com.yan.durak.gamelogic.communication.protocol.data.RetaliationSetData;
 import com.yan.durak.gamelogic.communication.protocol.messages.RetaliationInvalidProtocolMessage;
@@ -34,7 +34,7 @@ public class RemoteClientsWrongCoverageNotifierUnicastHook implements CommandHoo
         Player retaliatedPlayer = hookCommand.getRetaliatedPlayer();
 
         //obtain remote client from the player
-        ISocketClient client;
+        IRemoteClient client;
         if (retaliatedPlayer instanceof RemotePlayer) {
             client = ((RemotePlayer) retaliatedPlayer).getSocketClient();
         } else {

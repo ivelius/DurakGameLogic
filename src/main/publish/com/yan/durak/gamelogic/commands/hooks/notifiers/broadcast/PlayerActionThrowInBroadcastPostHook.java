@@ -3,7 +3,7 @@ package com.yan.durak.gamelogic.commands.hooks.notifiers.broadcast;
 
 import com.yan.durak.gamelogic.commands.custom.PlayerThrowInRequestCommand;
 import com.yan.durak.gamelogic.commands.hooks.CommandHook;
-import com.yan.durak.gamelogic.communication.connection.ISocketClient;
+import com.yan.durak.gamelogic.communication.connection.IRemoteClient;
 import com.yan.durak.gamelogic.communication.protocol.messages.PlayerTakesActionMessage;
 import com.yan.durak.gamelogic.player.Player;
 import com.yan.durak.gamelogic.player.RemotePlayer;
@@ -32,7 +32,7 @@ public class PlayerActionThrowInBroadcastPostHook implements CommandHook<PlayerT
         for (Player player : hookCommand.getGameSession().getPlayers()) {
             if (player instanceof RemotePlayer) {
                 RemotePlayer remotePlayer = (RemotePlayer) player;
-                ISocketClient client = remotePlayer.getSocketClient();
+                IRemoteClient client = remotePlayer.getSocketClient();
                 client.sendMessage(jsonMsg);
             }
         }

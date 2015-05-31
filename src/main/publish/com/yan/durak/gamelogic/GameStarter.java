@@ -2,7 +2,7 @@ package com.yan.durak.gamelogic;
 
 
 import com.yan.durak.gamelogic.commands.custom.startgame.GameStartCommand;
-import com.yan.durak.gamelogic.communication.connection.ISocketClient;
+import com.yan.durak.gamelogic.communication.connection.IRemoteClient;
 import com.yan.durak.gamelogic.game.GameRules;
 import com.yan.durak.gamelogic.game.GameSession;
 
@@ -19,7 +19,7 @@ public class GameStarter {
      * Accepts up to 3 players which are can be remote clients.
      * If instead of remote client null is provided , than player replaced with a BOT.
      */
-    public GameStarter(ISocketClient playerZero, ISocketClient playerOne, ISocketClient playerTwo) {
+    public GameStarter(IRemoteClient playerZero, IRemoteClient playerOne, IRemoteClient playerTwo) {
         mGameSession = new GameSession();
         mGameSession.setGameRules(new GameRules());
         GameStartCommand gameStartCommand = new GameStartCommand();

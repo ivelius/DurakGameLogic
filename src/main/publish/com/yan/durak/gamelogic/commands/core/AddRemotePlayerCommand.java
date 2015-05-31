@@ -5,7 +5,7 @@ import com.yan.durak.gamelogic.cards.Card;
 import com.yan.durak.gamelogic.cards.Pile;
 import com.yan.durak.gamelogic.commands.BaseSessionCommand;
 import com.yan.durak.gamelogic.commands.custom.AddPileCommand;
-import com.yan.durak.gamelogic.communication.connection.ISocketClient;
+import com.yan.durak.gamelogic.communication.connection.IRemoteClient;
 import com.yan.durak.gamelogic.player.RemotePlayer;
 
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
  */
 public class AddRemotePlayerCommand extends BaseSessionCommand {
 
-    private ISocketClient mRemoteClient;
+    private IRemoteClient mRemoteClient;
     private RemotePlayer mAddedPlayer;
 
     @Override
@@ -40,11 +40,11 @@ public class AddRemotePlayerCommand extends BaseSessionCommand {
         getGameSession().executeCommand(addPileCommand);
     }
 
-    public void setRemoteClient(ISocketClient remoteClient) {
+    public void setRemoteClient(IRemoteClient remoteClient) {
         mRemoteClient = remoteClient;
     }
 
-    public ISocketClient getRemoteClient() {
+    public IRemoteClient getRemoteClient() {
         return mRemoteClient;
     }
 
