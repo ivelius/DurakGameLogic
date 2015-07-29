@@ -11,6 +11,8 @@ import com.yan.durak.gamelogic.commands.hooks.notifiers.broadcast.*;
 import com.yan.durak.gamelogic.commands.hooks.notifiers.unicast.RemoteClientsGameSetupUnicastHook;
 import com.yan.durak.gamelogic.commands.hooks.notifiers.unicast.RemoteClientsWrongCoverageNotifierUnicastHook;
 import com.yan.durak.gamelogic.communication.connection.IRemoteClient;
+import com.yan.durak.gamelogic.game.IGameRules;
+import com.yan.durak.gamelogic.validation.GameSessionValidations;
 
 /**
  * Created by Yan-Home on 12/22/2014.
@@ -19,9 +21,7 @@ import com.yan.durak.gamelogic.communication.connection.IRemoteClient;
  */
 public class GameStartCommand extends BaseSessionCommand {
 
-    private IRemoteClient playerZero;
-    private IRemoteClient playerOne;
-    private IRemoteClient playerTwo;
+    private IRemoteClient[] mRemoteClients;
 
     @Override
     public void execute() {
@@ -34,10 +34,8 @@ public class GameStartCommand extends BaseSessionCommand {
         //clear the game session and put discard and stock piles
         getGameSession().executeCommand(new PrepareGameSessionCommand());
 
-        //Add 3 players
-        addPlayer(playerZero);
-        addPlayer(playerOne);
-        addPlayer(playerTwo);
+        //add players to the game
+        addPlayers();
 
         //define who attacks and who defends
         IdentifyNextRoundPlayersCommand identifyCommand = new IdentifyNextRoundPlayersCommand();
@@ -48,6 +46,14 @@ public class GameStartCommand extends BaseSessionCommand {
         startRoundCommand.setRoundAttackingPlayerIndex(identifyCommand.getNextRoundAttackerPlayerIndex());
         startRoundCommand.setRoundDefendingPlayerIndex(identifyCommand.getNextRoundDefenderPlayerIndex());
         getGameSession().executeCommand(startRoundCommand);
+    }
+
+    private void addPlayers() {
+        GameSessionValidations.validateAmountOfPlayersInGame(mRemoteClients.length);
+
+        for (int i = 0; i < mRemoteClients.length; i++) {
+            addPlayer(mRemoteClients[i]);
+        }
     }
 
     private void addPlayer(IRemoteClient playerClient) {
@@ -92,10 +98,8 @@ public class GameStartCommand extends BaseSessionCommand {
 
     }
 
-    public void setRemotePlayers(IRemoteClient playerZero, IRemoteClient playerOne, IRemoteClient playerTwo) {
-        this.playerZero = playerZero;
-        this.playerOne = playerOne;
-        this.playerTwo = playerTwo;
+    public void setRemotePlayers(final IRemoteClient... remoteClients) {
+        this.mRemoteClients = remoteClients;
     }
 
 }

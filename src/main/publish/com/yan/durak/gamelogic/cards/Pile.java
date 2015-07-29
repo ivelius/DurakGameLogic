@@ -54,4 +54,13 @@ public class Pile {
         public static final String DISCARD_PILE_TAG = "DISCARD_PILE_TAG";
         public static final String FIELD_PILE = "FIELD_PILE";
     }
+
+    @Override
+    public String toString() {
+        String str = "";
+        for (String tag : mTags) {
+            str +=tag;
+        }
+        return str;
+    }
 }

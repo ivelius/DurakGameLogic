@@ -3,7 +3,7 @@ package com.yan.durak.gamelogic;
 
 import com.yan.durak.gamelogic.commands.custom.startgame.GameStartCommand;
 import com.yan.durak.gamelogic.communication.connection.IRemoteClient;
-import com.yan.durak.gamelogic.game.GameRules;
+import com.yan.durak.gamelogic.game.IGameRules;
 import com.yan.durak.gamelogic.game.GameSession;
 
 /**
@@ -16,14 +16,14 @@ public class GameStarter {
     private final GameSession mGameSession;
 
     /**
-     * Accepts up to 3 players which are can be remote clients.
+     * Accepts array of players which are can be remote clients.
      * If instead of remote client null is provided , than player replaced with a BOT.
      */
-    public GameStarter(IRemoteClient playerZero, IRemoteClient playerOne, IRemoteClient playerTwo) {
+    public GameStarter(final IGameRules gameRules, final IRemoteClient... remoteClients) {
         mGameSession = new GameSession();
-        mGameSession.setGameRules(new GameRules());
+        mGameSession.setGameRules(gameRules);
         GameStartCommand gameStartCommand = new GameStartCommand();
-        gameStartCommand.setRemotePlayers(playerZero,playerOne,playerTwo);
+        gameStartCommand.setRemotePlayers(remoteClients);
         mGameSession.addCommand(gameStartCommand);
     }
 

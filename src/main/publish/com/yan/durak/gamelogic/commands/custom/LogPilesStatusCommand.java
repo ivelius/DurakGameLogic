@@ -16,19 +16,20 @@ public class LogPilesStatusCommand extends BaseSessionCommand {
     @Override
     public void execute() {
 
+        if (!LogUtils.LOGGING_ENABLED)
+            return;
+
         LogUtils.log("===================================================================================================================================\n");
         LogUtils.log("Selected trump suit is : " + getGameSession().getTrumpSuit());
         for (int i = 0; i < getGameSession().getPilesStack().size(); i++) {
             Pile pile = getGameSession().getPilesStack().get(i);
 
             LogUtils.log("************************************************************************\n");
-            LogUtils.log("Pile index : " + i + " cards count = " + pile.getCardsInPile().size());
+            LogUtils.log("Pile " + i + " : " + pile + " cards count = " + pile.getCardsInPile().size());
             LogUtils.log("--------------------------------------");
             for (Card card : pile.getCardsInPile()) {
                 LogUtils.log("Rank : " + card.getRank() + " Suit : " + card.getSuit());
             }
         }
-
-
     }
 }

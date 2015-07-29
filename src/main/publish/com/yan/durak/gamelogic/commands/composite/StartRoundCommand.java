@@ -9,6 +9,7 @@ import com.yan.durak.gamelogic.commands.control.PlayerThrowInRequestControlComma
 import com.yan.durak.gamelogic.commands.control.RetaliationExecutionControlCommand;
 import com.yan.durak.gamelogic.commands.control.RetaliationValidationControlCommand;
 import com.yan.durak.gamelogic.commands.custom.*;
+import com.yan.durak.gamelogic.game.IGameRules;
 import com.yan.durak.gamelogic.player.Player;
 
 import java.util.Collection;
@@ -218,7 +219,7 @@ public class StartRoundCommand extends BaseSessionCommand {
         int totalPilesOnField = uncoveredFieldPilesAmount + coveredFieldPilesAmount;
 
         //calculate the amount that is allowed to be throwed in
-        return Math.min(getGameSession().getGameRules().getMaxPilesOnFieldAmount() - totalPilesOnField, retaliatorPileCardsInHand - uncoveredFieldPilesAmount);
+        return Math.min(IGameRules.MAX_PILES_ON_FIELD_AMOUNT - totalPilesOnField, retaliatorPileCardsInHand - uncoveredFieldPilesAmount);
     }
 
     /**

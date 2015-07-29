@@ -210,7 +210,7 @@ public class GameSessionTest {
     }
 
     /**
-     * Method: setGameRules(GameRules gameRules)
+     * Method: setGameRules(IGameRules gameRules)
      */
     @Test
     public void testSetGameRules() throws Exception {

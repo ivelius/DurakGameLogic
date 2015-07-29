@@ -65,6 +65,7 @@ publishing {
         //maven repository is just a local path to the dropbox folder
         maven {
             url "file:///E:/Dropbox/public/maven-repo"
+//            url "file:///C:/Users/yan.braslavsky/Dropbox/public/maven-repo"
         }
     }
 }

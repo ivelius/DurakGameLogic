@@ -1,4 +1,5 @@
 import com.yan.durak.gamelogic.GameStarter;
+import com.yan.durak.gamelogic.game.IGameRules;
 
 public class Main {
 
@@ -7,7 +8,7 @@ public class Main {
     }
 
     private static void startGameWith3Bots() {
-        (new GameStarter(null, null, null)).start();
+        (new GameStarter(new IGameRules(){}, null, null, null)).start();
     }
 
 }

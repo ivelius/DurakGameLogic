@@ -31,7 +31,7 @@ public class GameSession {
 
     private List<Player> mPlayers;
 
-    private GameRules mGameRules;
+    private IGameRules mGameRules;
 
     private Map<Class<? extends SessionCommand>, CommandHook> mPreHooksMap;
     private Map<Class<? extends SessionCommand>, CommandHook> mPostHooksMap;
@@ -222,11 +222,11 @@ public class GameSession {
         return mPendingCommandsQueue;
     }
 
-    public GameRules getGameRules() {
+    public IGameRules getGameRules() {
         return mGameRules;
     }
 
-    public void setGameRules(GameRules gameRules) {
+    public void setGameRules(IGameRules gameRules) {
         mGameRules = gameRules;
     }
 
