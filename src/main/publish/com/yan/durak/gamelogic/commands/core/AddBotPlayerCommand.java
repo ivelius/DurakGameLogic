@@ -13,15 +13,18 @@ import java.util.ArrayList;
  * Created by Yan-Home on 12/22/2014.
  */
 public class AddBotPlayerCommand extends BaseSessionCommand {
+
+    private BotPlayer mAddedBotPlayer;
+
     @Override
     public void execute() {
 
         //add players
         //associate pile index with player
-        BotPlayer player = new BotPlayer(getGameSession().getPlayers().size(), getGameSession(),getGameSession().getPilesStack().size());
+        mAddedBotPlayer = new BotPlayer(getGameSession().getPlayers().size(), getGameSession(),getGameSession().getPilesStack().size());
 
         //add players
-        getGameSession().getPlayers().add(player);
+        getGameSession().getPlayers().add(mAddedBotPlayer);
 
         //first we creating a pile for a player
         AddPileCommand addPileCommand = new AddPileCommand();
@@ -33,5 +36,9 @@ public class AddBotPlayerCommand extends BaseSessionCommand {
         addPileCommand.setPile(pile);
         addPileCommand.setCards(new ArrayList<Card>());
         getGameSession().executeCommand(addPileCommand);
+    }
+
+    public BotPlayer getAddedBotPlayer() {
+        return mAddedBotPlayer;
     }
 }

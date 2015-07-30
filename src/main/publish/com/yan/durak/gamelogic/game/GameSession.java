@@ -33,8 +33,8 @@ public class GameSession {
 
     private IGameRules mGameRules;
 
-    private Map<Class<? extends SessionCommand>, CommandHook> mPreHooksMap;
-    private Map<Class<? extends SessionCommand>, CommandHook> mPostHooksMap;
+    private Map<Class<? extends SessionCommand>, List<CommandHook>> mPreHooksMap;
+    private Map<Class<? extends SessionCommand>, List<CommandHook>> mPostHooksMap;
 
     public GameSession() {
         mPilesStack = new Stack<>();
@@ -94,15 +94,27 @@ public class GameSession {
      * Adds a Hook that will be triggered before the execution of associated command.
      */
     public void addPreHook(CommandHook commandHook) {
-        mPreHooksMap.put(commandHook.getHookTriggerCommandClass(), commandHook);
+        addHookToMap(commandHook, mPreHooksMap);
     }
 
     /**
      * Adds a Hook that will be triggered after the execution of associated command.
      */
     public void addPostHook(CommandHook commandHook) {
-        mPostHooksMap.put(commandHook.getHookTriggerCommandClass(), commandHook);
+        addHookToMap(commandHook, mPostHooksMap);
     }
+
+    private void addHookToMap(CommandHook commandHook, Map<Class<? extends SessionCommand>, List<CommandHook>> hooksMap) {
+        //get the hooks list for provided hook
+        List<CommandHook> hooksList = hooksMap.get(commandHook.getHookTriggerCommandClass());
+        //lazy instantiate the list for given hook
+        if (hooksList == null) {
+            hooksList = new ArrayList<>();
+            hooksMap.put(commandHook.getHookTriggerCommandClass(), hooksList);
+        }
+        hooksList.add(commandHook);
+    }
+
 
     /**
      * Returns the first occurrence of the pile that contains provided tag.
@@ -142,7 +154,7 @@ public class GameSession {
      * @param command the command that will be checked for hooks.
      * @param hookMap the map that will be used to search for hooks.
      */
-    private void checkForHooks(SessionCommand command, Map<Class<? extends SessionCommand>, CommandHook> hookMap) {
+    private void checkForHooks(SessionCommand command, Map<Class<? extends SessionCommand>, List<CommandHook>> hookMap) {
 
         //if there are no hooks at all , there is nothing to search
         if (hookMap.isEmpty())
@@ -158,10 +170,11 @@ public class GameSession {
             //check if there is a hook for current class
             if (hookMap.containsKey(clazz)) {
 
-                //trigger the hook that was found for current class
-                hookMap.get(clazz).onHookTrigger(command);
-
-                //TODO :support more than one hook per command
+                //trigger all hooks that are found for current class
+                List<CommandHook> hookList = hookMap.get(clazz);
+                for (CommandHook commandHook : hookList) {
+                    commandHook.onHookTrigger(command);
+                }
                 return;
             }
 
@@ -169,10 +182,11 @@ public class GameSession {
             for (Class<?> interfaze : clazz.getInterfaces()) {
                 //check if there is a hook for current interface
                 if (hookMap.containsKey(interfaze)) {
-                    //trigger the hook that was found for current interface
-                    hookMap.get(interfaze).onHookTrigger(command);
-
-                    //TODO :support more than one hook per command
+                    //trigger all hooks that are found for current interface
+                    List<CommandHook> hookList = hookMap.get(interfaze);
+                    for (CommandHook commandHook : hookList) {
+                        commandHook.onHookTrigger(command);
+                    }
                     return;
                 }
             }

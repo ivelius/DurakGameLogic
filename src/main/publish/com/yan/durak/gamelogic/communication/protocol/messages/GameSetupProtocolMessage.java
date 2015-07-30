@@ -6,6 +6,8 @@ import com.yan.durak.gamelogic.communication.protocol.BaseProtocolMessage;
 import com.yan.durak.gamelogic.communication.protocol.data.CardData;
 import com.yan.durak.gamelogic.communication.protocol.data.PlayerData;
 
+import java.util.List;
+
 /**
  * Created by Yan-Home on 12/24/2014.
  */
@@ -14,10 +16,10 @@ public class GameSetupProtocolMessage extends BaseProtocolMessage<GameSetupProto
     public static final String MESSAGE_NAME = "gameSetup";
 
 
-    public GameSetupProtocolMessage(PlayerData myPlayerData, CardData trumpCard) {
+    public GameSetupProtocolMessage(PlayerData myPlayerData, CardData trumpCard, List<PlayerData> alreadyJoinedPlayers) {
         super();
         setMessageName(MESSAGE_NAME);
-        setMessageData(new ProtocolMessageData(myPlayerData, trumpCard));
+        setMessageData(new ProtocolMessageData(myPlayerData, trumpCard, alreadyJoinedPlayers));
     }
 
     public static class ProtocolMessageData {
@@ -30,9 +32,13 @@ public class GameSetupProtocolMessage extends BaseProtocolMessage<GameSetupProto
         @SerializedName("trumpCard")
         CardData mTrumpCard;
 
-        public ProtocolMessageData(PlayerData myPlayerData, CardData trumpCard) {
+        @SerializedName("alreadyJoinedPlayers")
+        List<PlayerData> mAlreadyJoinedPlayers;
+
+        public ProtocolMessageData(PlayerData myPlayerData, CardData trumpCard, List<PlayerData> alreadyJoinedPlayers) {
             mMyPlayerData = myPlayerData;
             mTrumpCard = trumpCard;
+            mAlreadyJoinedPlayers = alreadyJoinedPlayers;
         }
 
         public PlayerData getMyPlayerData() {
@@ -41,6 +47,10 @@ public class GameSetupProtocolMessage extends BaseProtocolMessage<GameSetupProto
 
         public CardData getTrumpCard() {
             return mTrumpCard;
+        }
+
+        public List<PlayerData> getAlreadyJoinedPlayers() {
+            return mAlreadyJoinedPlayers;
         }
     }
 }

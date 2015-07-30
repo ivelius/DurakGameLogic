@@ -11,7 +11,6 @@ import com.yan.durak.gamelogic.commands.hooks.notifiers.broadcast.*;
 import com.yan.durak.gamelogic.commands.hooks.notifiers.unicast.RemoteClientsGameSetupUnicastHook;
 import com.yan.durak.gamelogic.commands.hooks.notifiers.unicast.RemoteClientsWrongCoverageNotifierUnicastHook;
 import com.yan.durak.gamelogic.communication.connection.IRemoteClient;
-import com.yan.durak.gamelogic.game.IGameRules;
 import com.yan.durak.gamelogic.validation.GameSessionValidations;
 
 /**
@@ -79,6 +78,12 @@ public class GameStartCommand extends BaseSessionCommand {
         //take in mind that it takes only the information that is available for that
         //point of time
         getGameSession().addPostHook(new RemoteClientsGameSetupUnicastHook());
+
+        //notify other remote clients that remote player joins the game
+        getGameSession().addPostHook(new RemoteClientJoinsGameBroadcastHook());
+
+        //notify other remote clients that bot joins the game
+        getGameSession().addPostHook(new BotJoinsGameBroadcastHook());
 
         //Those pre hooks are used to notify the next player action
         //That allows the client to change the UI state accordingly

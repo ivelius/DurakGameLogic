@@ -9,15 +9,17 @@ import com.yan.durak.gamelogic.communication.connection.IRemoteClient;
 import com.yan.durak.gamelogic.communication.protocol.data.CardData;
 import com.yan.durak.gamelogic.communication.protocol.data.PlayerData;
 import com.yan.durak.gamelogic.communication.protocol.messages.GameSetupProtocolMessage;
+import com.yan.durak.gamelogic.game.IGameRules;
+import com.yan.durak.gamelogic.player.Player;
 import com.yan.durak.gamelogic.player.RemotePlayer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Yan-Home on 12/24/2014.
  */
 public class RemoteClientsGameSetupUnicastHook implements CommandHook<AddRemotePlayerCommand> {
-
 
     @Override
     public Class<AddRemotePlayerCommand> getHookTriggerCommandClass() {
@@ -38,9 +40,20 @@ public class RemoteClientsGameSetupUnicastHook implements CommandHook<AddRemoteP
         //get the trump card
         Card trumpCard = cardsInStockPile.get(0);
 
+        //creating list of all other players that already joined
+        List<PlayerData> alreadyJoinedPlayers = new ArrayList<>(IGameRules.MAX_PLAYERS_IN_GAME);
+        for (Player player : hookCommand.getGameSession().getPlayers()) {
+            if (player.getGameIndex() != addedPlayer.getGameIndex()) {
+                alreadyJoinedPlayers.add(new PlayerData(player.getGameIndex(), player.getPileIndex()));
+            }
+        }
+
+        //create my player data
+        PlayerData myPlayerData = new PlayerData(addedPlayer.getGameIndex(), addedPlayer.getPileIndex());
+
         //prepare game setup message
         String jsonMsg = new GameSetupProtocolMessage(
-                new PlayerData(addedPlayer.getGameIndex(), addedPlayer.getPileIndex()), new CardData(trumpCard.getRank(), trumpCard.getSuit())).toJsonString();
+                myPlayerData, new CardData(trumpCard.getRank(), trumpCard.getSuit()), alreadyJoinedPlayers).toJsonString();
 
         //send game setup message to client
         client.sendMessage(jsonMsg);
