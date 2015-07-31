@@ -27,4 +27,9 @@ public interface IGameRules {
      */
     int MAX_PILES_ON_FIELD_AMOUNT = 6;
 
+    /**
+     * Returns amount of players in current game
+     */
+    int getTotalPlayersInGameAmount();
+
 }

@@ -46,7 +46,8 @@ public class RemoteClientJoinsGameBroadcastHook implements CommandHook<AddRemote
             IRemoteClient client = ((RemotePlayer) otherPlayer).getSocketClient();
 
             //prepare game player joined message
-            String jsonMsg = new PlayerJoinProtocolMessage(joinedPlayerData).toJsonString();
+            String jsonMsg = new PlayerJoinProtocolMessage(joinedPlayerData,
+                    hookCommand.getGameSession().getGameRules().getTotalPlayersInGameAmount()).toJsonString();
 
             //send game setup message to client
             client.sendMessage(jsonMsg);

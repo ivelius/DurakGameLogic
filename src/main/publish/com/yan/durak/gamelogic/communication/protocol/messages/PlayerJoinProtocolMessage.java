@@ -12,10 +12,10 @@ public class PlayerJoinProtocolMessage extends BaseProtocolMessage<PlayerJoinPro
 
     public static final String MESSAGE_NAME = "playerJoin";
 
-    public PlayerJoinProtocolMessage(PlayerData playerData) {
+    public PlayerJoinProtocolMessage(PlayerData playerData, int totalPlayersInGame) {
         super();
         setMessageName(MESSAGE_NAME);
-        setMessageData(new ProtocolMessageData(playerData));
+        setMessageData(new ProtocolMessageData(playerData, totalPlayersInGame));
     }
 
     public static class ProtocolMessageData {
@@ -23,12 +23,20 @@ public class PlayerJoinProtocolMessage extends BaseProtocolMessage<PlayerJoinPro
         @SerializedName("joinedPlayerData")
         PlayerData mJoinedPlayerData;
 
-        public ProtocolMessageData(PlayerData joinedPlayerData) {
+        @SerializedName("totalPlayersInGame")
+        int mTotalPlayersInGame;
+
+        public ProtocolMessageData(PlayerData joinedPlayerData, int totalPlayersInGame) {
             mJoinedPlayerData = joinedPlayerData;
+            mTotalPlayersInGame = totalPlayersInGame;
         }
 
         public PlayerData getJoinedPlayerData() {
             return mJoinedPlayerData;
+        }
+
+        public int getTotalPlayersInGame() {
+            return mTotalPlayersInGame;
         }
     }
 }

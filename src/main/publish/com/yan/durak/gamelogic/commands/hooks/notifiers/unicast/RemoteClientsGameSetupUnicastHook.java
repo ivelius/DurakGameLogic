@@ -53,7 +53,9 @@ public class RemoteClientsGameSetupUnicastHook implements CommandHook<AddRemoteP
 
         //prepare game setup message
         String jsonMsg = new GameSetupProtocolMessage(
-                myPlayerData, new CardData(trumpCard.getRank(), trumpCard.getSuit()), alreadyJoinedPlayers).toJsonString();
+                myPlayerData, new CardData(trumpCard.getRank(),
+                trumpCard.getSuit()), alreadyJoinedPlayers,
+                hookCommand.getGameSession().getGameRules().getTotalPlayersInGameAmount()).toJsonString();
 
         //send game setup message to client
         client.sendMessage(jsonMsg);

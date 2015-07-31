@@ -48,7 +48,7 @@ public class GameStartCommand extends BaseSessionCommand {
     }
 
     private void addPlayers() {
-        GameSessionValidations.validateAmountOfPlayersInGame(mRemoteClients.length);
+        GameSessionValidations.validateAmountOfPlayersInGame(mRemoteClients.length, getGameSession().getGameRules());
 
         for (int i = 0; i < mRemoteClients.length; i++) {
             addPlayer(mRemoteClients[i]);

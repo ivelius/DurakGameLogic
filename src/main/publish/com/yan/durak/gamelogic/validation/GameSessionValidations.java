@@ -26,11 +26,13 @@ public class GameSessionValidations {
      *
      * @param playersInGame the current requested amount of players in the game
      */
-    public static void validateAmountOfPlayersInGame(int playersInGame) {
+    public static void validateAmountOfPlayersInGame(final int playersInGame, final IGameRules gameRules) {
         if (playersInGame > IGameRules.MAX_PLAYERS_IN_GAME)
             throw new RuntimeException("Can't play with " + playersInGame + "Game is limited to " + IGameRules.MAX_PLAYERS_IN_GAME + " players");
         else if (playersInGame < IGameRules.MIN_PLAYERS_IN_GAME)
             throw new RuntimeException("Can't play with " + playersInGame + "Game should have at least " + IGameRules.MAX_PLAYERS_IN_GAME + " players");
+        else if (playersInGame != gameRules.getTotalPlayersInGameAmount())
+            throw new RuntimeException("Can't play with " + playersInGame + "According to game rules , game should have exactly " + gameRules.getTotalPlayersInGameAmount() + " players");
     }
 
 }

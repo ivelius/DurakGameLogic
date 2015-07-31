@@ -16,10 +16,11 @@ public class GameSetupProtocolMessage extends BaseProtocolMessage<GameSetupProto
     public static final String MESSAGE_NAME = "gameSetup";
 
 
-    public GameSetupProtocolMessage(PlayerData myPlayerData, CardData trumpCard, List<PlayerData> alreadyJoinedPlayers) {
+    public GameSetupProtocolMessage(PlayerData myPlayerData, CardData trumpCard,
+                                    List<PlayerData> alreadyJoinedPlayers, int totalPlayersInGame) {
         super();
         setMessageName(MESSAGE_NAME);
-        setMessageData(new ProtocolMessageData(myPlayerData, trumpCard, alreadyJoinedPlayers));
+        setMessageData(new ProtocolMessageData(myPlayerData, trumpCard, alreadyJoinedPlayers, totalPlayersInGame));
     }
 
     public static class ProtocolMessageData {
@@ -35,10 +36,15 @@ public class GameSetupProtocolMessage extends BaseProtocolMessage<GameSetupProto
         @SerializedName("alreadyJoinedPlayers")
         List<PlayerData> mAlreadyJoinedPlayers;
 
-        public ProtocolMessageData(PlayerData myPlayerData, CardData trumpCard, List<PlayerData> alreadyJoinedPlayers) {
+        @SerializedName("totalPlayersInGame")
+        int mTotalPlayersInGame;
+
+        public ProtocolMessageData(PlayerData myPlayerData, CardData trumpCard,
+                                   List<PlayerData> alreadyJoinedPlayers, int totalPlayersInGame) {
             mMyPlayerData = myPlayerData;
             mTrumpCard = trumpCard;
             mAlreadyJoinedPlayers = alreadyJoinedPlayers;
+            mTotalPlayersInGame = totalPlayersInGame;
         }
 
         public PlayerData getMyPlayerData() {
@@ -51,6 +57,10 @@ public class GameSetupProtocolMessage extends BaseProtocolMessage<GameSetupProto
 
         public List<PlayerData> getAlreadyJoinedPlayers() {
             return mAlreadyJoinedPlayers;
+        }
+
+        public int getTotalPlayersInGame() {
+            return mTotalPlayersInGame;
         }
     }
 }

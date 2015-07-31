@@ -8,7 +8,12 @@ public class Main {
     }
 
     private static void startGameWith3Bots() {
-        (new GameStarter(new IGameRules() {},null, null, null)).start();
+        (new GameStarter(new IGameRules() {
+            @Override
+            public int getTotalPlayersInGameAmount() {
+                return 3;
+            }
+        },null, null, null)).start();
     }
 
 }
